@@ -14,5 +14,6 @@ namespace Blackout
         /// <param name="size">O tamanho da área jogável</param>
         void ShowBoard();
         void SetBoardRef(BlackoutBoard B);
+        void PromptUser();
     }
 }

@@ -18,7 +18,6 @@ namespace Blackout
             {
                 for (int j = 0; j < Board.Board.GetLength(1); j++)
                 {
-                    Board.Board[i, 2].Toggle();
                     Console.Write(Board.Board[i, j] + "   ");
                 }
                 Console.WriteLine();
@@ -27,6 +26,21 @@ namespace Blackout
         public void SetBoardRef(BlackoutBoard B)
         {
             Board = B;
+        }
+        public void PromptUser()
+        {
+            int X;
+            int Y;
+            Console.Write("Where to Toggle (in the X axis)?");
+            X = Convert.ToInt16(Console.ReadLine());
+            Console.Write("Where to Toggle (in the Y axis)?");
+            Y = Convert.ToInt16(Console.ReadLine());
+            X -= 1;
+            Y -= 1;
+            X = Math.Clamp(X, 0, Board.Board.GetLength(1) - 1);
+            Y = Math.Clamp(Y, 0, Board.Board.GetLength(0) - 1);
+            Console.WriteLine(X + " " + Y);
+            Board.ToggleBoard(X, Y);
         }
     }
 }
