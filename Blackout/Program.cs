@@ -8,13 +8,8 @@ namespace Blackout
             IView view = new SpectreView();
             BlackoutBoard B = new BlackoutBoard(5);
             view.SetBoardRef(B);
-            view.ShowBoard();
-            do
-            {
-                view.PromptUser();
-                view.ShowBoard();
-            }
-            while (true);
+            Controller controller = new Controller();
+            controller.Run();
         }
     }
 }

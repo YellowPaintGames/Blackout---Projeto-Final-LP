@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace Blackout
 {
@@ -31,16 +33,25 @@ namespace Blackout
         {
             int X;
             int Y;
-            Console.Write("Where to Toggle (in the X axis)?");
+
+            Console.WriteLine("Where to Toggle in the X axis?");
             X = Convert.ToInt16(Console.ReadLine());
-            Console.Write("Where to Toggle (in the Y axis)?");
+
+
+            Console.WriteLine("Where to Toggle in the Y axis?");
             Y = Convert.ToInt16(Console.ReadLine());
+
             X -= 1;
             Y -= 1;
             X = Math.Clamp(X, 0, Board.Board.GetLength(1) - 1);
             Y = Math.Clamp(Y, 0, Board.Board.GetLength(0) - 1);
             Console.WriteLine(X + " " + Y);
             Board.ToggleBoard(X, Y);
+        }
+
+        public string GetMenuChoice()
+        {
+            return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Pick an Option\n    Play\n  HowToPlay\n     Exit").AddChoices("Play", "HowToPlay", "Exit"));
         }
     }
 }

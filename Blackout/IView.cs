@@ -15,5 +15,6 @@ namespace Blackout
         void ShowBoard();
         void SetBoardRef(BlackoutBoard B);
         void PromptUser();
+        string GetMenuChoice();
     }
 }

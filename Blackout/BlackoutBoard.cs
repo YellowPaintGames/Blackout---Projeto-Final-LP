@@ -29,10 +29,22 @@ namespace Blackout
         public void ToggleBoard(int X, int Y)
         {
             Board[Y, X].Toggle();
-            Board[Y, Math.Clamp(X - 1, 0, Board.GetLength(0) - 1)].Toggle();
-            Board[Y, Math.Clamp(X + 1, 0, Board.GetLength(0) - 1)].Toggle();
-            Board[Math.Clamp(Y + 1, 0, Board.GetLength(1) - 1), X].Toggle();
-            Board[Math.Clamp(Y - 1, 0, Board.GetLength(1) - 1), X].Toggle();
+            if(X > 0)
+            {
+                Board[Y,X - 1].Toggle();
+            }
+            if(X < Board.GetLength(1) - 1)
+            {
+                Board[Y,X + 1].Toggle();
+            }
+            if(Y > 0)
+            {
+                Board[Y - 1,X].Toggle();
+            }
+            if(Y < Board.GetLength(0) - 1)
+            {
+                Board[Y + 1,X].Toggle();
+            }
 
             /*
             Console.WriteLine(X + " " + Math.Clamp(Y - 1, 0, Board.GetLength(1) - 1));
