@@ -43,12 +43,11 @@ namespace Blackout
         /// </summary>
         public void StartRandomBoard()
         {
-            //difficulty defaults medium
-            int difficulty = 1; //0 - easy (3x3), 1- medium (5x5), 2 - hard(8x8)
-            int numberOfSpots = 3; //easy = 1, medium = 3, hard = 5
+            int numberOfSpots = 3;
 
-            if (difficulty == 0) numberOfSpots = 1;
-            if (difficulty == 2) numberOfSpots = 5;
+            if (size == 3) numberOfSpots = 1; //Easy
+            else if (size == 5) numberOfSpots = 2; //Medium
+            else if (size == 8) numberOfSpots = 3; //Hard
 
             Random rand = new Random();
 

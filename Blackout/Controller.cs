@@ -26,6 +26,9 @@ namespace Blackout
         public void StartGame()
         {
             Board = new BlackoutBoard(View.PromptStart(), this);
+
+            Board.StartRandomBoard();
+            
             View.ShowBoard(Board);
             Board.ToggleBoard(View.PromptUser(Board));
         }
