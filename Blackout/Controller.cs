@@ -4,11 +4,12 @@ namespace Blackout
 {
     public class Controller
     {
-        private readonly SpectreView spectreView;
+        private readonly IView spectreView;
 
-        public Controller()
+        public Controller(BlackoutBoard b, IView v)
         {
-            spectreView = new SpectreView();
+            spectreView = v;
+            spectreView.SetBoardRef(b);
         }
 
         public void Run()
