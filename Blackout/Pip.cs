@@ -11,7 +11,7 @@ namespace Blackout
     /// </summary>
     public class Pip
     {
-        public bool On { get; private set; } = true;
+        public bool On { get; private set; } = false;
         /// <summary>
         /// Liga/Desliga este Pip atual
         /// </summary>

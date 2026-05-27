@@ -20,15 +20,23 @@ namespace Blackout
             {
                 for (int j = 0; j < Board.Board.GetLength(1); j++)
                 {
-                    Console.Write(Board.Board[i, j] + "   ");
+                    string cor = "";
+                    if (Board.Board[i, j].On)
+                    {
+                        cor = "green";
+                    }
+                    else { cor = "red"; }
+                    AnsiConsole.Write($"[{cor}]{Board.Board[i, j]}[/]   ");
                 }
-                Console.WriteLine();
             }
+                AnsiConsole.WriteLine();
         }
+    
         public void SetBoardRef(BlackoutBoard B)
         {
             Board = B;
         }
+
         public void PromptUser()
         {
             int X;
@@ -45,13 +53,15 @@ namespace Blackout
             Y -= 1;
             X = Math.Clamp(X, 0, Board.Board.GetLength(1) - 1);
             Y = Math.Clamp(Y, 0, Board.Board.GetLength(0) - 1);
-            Console.WriteLine(X + " " + Y);
+            AnsiConsole.WriteLine(X + " " + Y);
             Board.ToggleBoard(X, Y);
         }
 
         public string GetMenuChoice()
         {
-            return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Pick an Option\n    Play\n  HowToPlay\n     Exit").AddChoices("Play", "HowToPlay", "Exit"));
+            AnsiConsole.Write(new FigletText("Blackout").Centered().Color(Spectre.Console.Color.White));
+
+            return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[lightgreen]Use[/] [bold cyan]Up Arrow[/] [lightgreen]and[/] [bold cyan]Down Arrow[/] [lightgreen]to move between the options[/]").AddChoices("Play", "HowToPlay", "Exit"));
         }
     }
 }
