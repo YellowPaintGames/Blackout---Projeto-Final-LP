@@ -28,7 +28,6 @@ namespace Blackout
                 }
             }
         }
-
         public void StartRandomBoard()
         {
             //difficulty defaults medium
@@ -57,7 +56,6 @@ namespace Blackout
                 }
             }
         }
-        public void ToggleBoard(int X, int Y)
         public void ToggleBoard((int X, int Y) coords)
         {
             Board[coords.Y, coords.X].Toggle();
