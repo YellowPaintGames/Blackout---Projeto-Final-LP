@@ -1,10 +1,10 @@
 BlackOut
 
-João Amaral - Criação do menu, spawn random de células desligadas, documentação do relatório
+João Amaral - Criação do menu, spawn random de células ligadas, documentação do relatório
 
 Francisco Rosa - Comentário do código e adição do Spectre.Console em algumas linhas de código
 
-Francisco Caldeira - Criação do modelo MVC, e inicialização do repositório git
+Francisco Caldeira - Criação do modelo MVC, inicialização do repositório git, e correção de bugs
 
 Repositório github: https://github.com/YellowPaintGames/Blackout---Projeto-Final-LP
 ---
@@ -20,14 +20,15 @@ Pip: A classe responsável pelas celulas, que tem 2 estados, ligado ou desligado
 
 SpectreView: A classe responsável pelo que vai ser utilizado para mostrar o tabuleiro
 
-Program: A classe responsável por chamar as outras
+Program: O início do programa
 
 ---
 ```mermaid
-
 classDiagram
-    Pip <|-- IView
-
+    SpectreView <|-- IView
+    SpectreView <--> Controller
+    BlackoutBoard <--> Controller
+    BlackoutBoard <-- Pip
     class BlackoutBoard{
         -C: Controller
         -size: int
@@ -71,7 +72,7 @@ classDiagram
         +SetControllerRef(C: Controller)
     }
 
-    class Program{        
+    class Program{
         -Main(args: string[])
     }
 ```
