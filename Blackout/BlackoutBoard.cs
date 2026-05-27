@@ -26,6 +26,35 @@ namespace Blackout
                 }
             }
         }
+
+        public void StartRandomBoard()
+        {
+            //difficulty defaults medium
+            int difficulty = 1; //0 - easy (3x3), 1- medium (5x5), 2 - hard(8x8)
+            int numberOfSpots = 3; //easy = 1, medium = 3, hard = 5
+
+            if(difficulty == 0) numberOfSpots = 1;
+            if(difficulty == 2) numberOfSpots = 5;
+
+            Random rand = new Random();
+
+            while (numberOfSpots != 0)
+            {
+                int randomSpotx  = rand.Next(0, Board.GetLength(0));
+                int randomSpoty  = rand.Next(0, Board.GetLength(1));
+                for (int x = 0; x <= randomSpotx; x++)
+                {
+                    for (int y = 0; y <= randomSpoty; y++)
+                    {
+                        if(x == randomSpotx && y == randomSpoty)
+                        {
+                            Board[x, y].Toggle();
+                            numberOfSpots--;
+                        }                        
+                    }
+                }
+            }
+        }
         public void ToggleBoard(int X, int Y)
         {
             Board[Y, X].Toggle();
