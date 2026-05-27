@@ -96,5 +96,22 @@ namespace Blackout
             }
             C.NextTurn();
         }
+
+        /// <summary>
+        /// Checks if all pips on the board are turned On.
+        /// </summary>
+        /// <returns>True if all pips are On, otherwise false.</returns>
+        public bool IsWin()
+        {
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+                {
+                    if (!Board[i, j].On)
+                        return false;
+                }
+            }
+            return true;
+        }
     }
 }

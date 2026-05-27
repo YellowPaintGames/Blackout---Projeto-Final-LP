@@ -34,5 +34,9 @@ namespace Blackout
         /// </summary>
         /// <returns>Returns the 3 options of difficulty the Player can choose from.</returns>
         int PromptStart();
+        /// <summary>
+        /// Shows a win message when all pips are turned on.
+        /// </summary>
+        void ShowWinMessage();
     }
 }

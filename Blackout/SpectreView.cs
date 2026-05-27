@@ -20,12 +20,22 @@ namespace Blackout
 
         public void ShowBoard(BlackoutBoard B)
         {
+            AnsiConsole.Clear();
+
             for (int i = 0; i < B.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < B.Board.GetLength(1); j++)
                 {
-                    Console.Write(B.Board[i, j] + "   ");
+                    if (B.Board[i, j].On)
+                    {
+                        AnsiConsole.Markup("[lightgreen]██[/] ");
+                    }
+                    else
+                    {
+                        AnsiConsole.Markup("[red]██[/] ");
+                    }
                 }
+                Console.WriteLine();
                 Console.WriteLine();
             }
         }
@@ -47,6 +57,7 @@ namespace Blackout
         }
         public void PromptMenuChoice()
         {
+            AnsiConsole.Clear();
             AnsiConsole.Write(new FigletText 
             ("Blackout").Centered().Color(Spectre.Console.Color.White));
 
@@ -59,12 +70,16 @@ namespace Blackout
             }
             if (choice == "How To Play")
             {
-                AnsiConsole.WriteLine("Some prompts will appear after the board, write out the coordinates and make them all [green] green! [/]");
+                AnsiConsole.Clear();
+                AnsiConsole.MarkupLine("Some prompts will appear after the board, write out the coordinates and make them all [lightgreen]green! [/]");
+                AnsiConsole.MarkupLine("\nPress any key to return to the menu...");
+                Console.ReadKey(true);
                 PromptMenuChoice();
             }
             if (choice == "Exit")
             {
-                AnsiConsole.Write("[red]BYE!![/]");
+                AnsiConsole.Clear();
+                AnsiConsole.MarkupLine("[red]BYE!![/]");
             }
         }
         public int PromptStart()
@@ -74,6 +89,15 @@ namespace Blackout
         public void SetControllerRef(Controller C)
         {
             Controller = C;
+        }
+
+        public void ShowWinMessage()
+        {
+            AnsiConsole.Clear();
+            AnsiConsole.MarkupLine("[bold green]You Win![/]");
+            AnsiConsole.MarkupLine("\nPress any key to return to the menu...");
+            Console.ReadKey(true);
+            PromptMenuChoice();
         }
     }
 }

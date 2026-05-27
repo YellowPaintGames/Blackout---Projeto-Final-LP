@@ -37,6 +37,11 @@ namespace Blackout
         public void NextTurn()
         {
             View.ShowBoard(Board);
+            if (Board.IsWin())
+            {
+                View.ShowWinMessage();
+                return;
+            }
             Board.ToggleBoard(View.PromptUser(Board));
         }
     }
