@@ -12,9 +12,10 @@ namespace Blackout
         /// para mostrar a área de jogo
         /// </summary>
         /// <param name="size">O tamanho da área jogável</param>
-        void ShowBoard();
-        void SetBoardRef(BlackoutBoard B);
-        void PromptUser();
-        string GetMenuChoice();
+        void ShowBoard(BlackoutBoard B);
+        void SetControllerRef(Controller C);
+        (int, int) PromptUser(BlackoutBoard B);
+        void PromptMenuChoice();
+        int PromptStart();
     }
 }

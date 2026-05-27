@@ -4,34 +4,22 @@ namespace Blackout
 {
     public class Controller
     {
-        private readonly IView spectreView;
-
-        public Controller(BlackoutBoard b, IView v)
+        private IView View;
+        private BlackoutBoard Board;
+        public void StartController(IView v)
         {
-            spectreView = v;
-            spectreView.SetBoardRef(b);
+            View = v;
         }
-
-        public void Run()
+        public void StartGame()
         {
-            while (true)
-            {
-                var choice = spectreView.GetMenuChoice();
-
-                if(choice == "Play")
-                {
-                    spectreView.ShowBoard();
-                    spectreView.PromptUser();
-                }
-                if(choice == "HowToPlay")
-                {
-                    break;
-                }
-                if(choice == "Exit")
-                {
-                    break;
-                }
-            }
+            Board = new BlackoutBoard(View.PromptStart(), this);
+            View.ShowBoard(Board);
+            Board.ToggleBoard(View.PromptUser(Board));
+        }
+        public void NextTurn()
+        {
+            View.ShowBoard(Board);
+            Board.ToggleBoard(View.PromptUser(Board));
         }
     }
 }
