@@ -5,11 +5,11 @@ namespace Blackout
     {
         private static void Main(string[] args)
         {
-            IView view = new SpectreView();
-            BlackoutBoard B = new BlackoutBoard(5);
-            view.SetBoardRef(B);
-            Controller controller = new Controller();
-            controller.Run();
+            IView V = new SpectreView();
+            Controller controller = new();
+            V.SetControllerRef(controller);
+            controller.StartController(V);
+            V.PromptMenuChoice();
         }
     }
 }

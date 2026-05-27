@@ -13,55 +13,58 @@ namespace Blackout
     /// </summary>
     public class SpectreView : IView
     {
-        private BlackoutBoard Board;
-        public void ShowBoard()
+        private Controller Controller;
+        public void ShowBoard(BlackoutBoard B)
         {
-            for (int i = 0; i < Board.Board.GetLength(0); i++)
+            for (int i = 0; i < B.Board.GetLength(0); i++)
             {
-                for (int j = 0; j < Board.Board.GetLength(1); j++)
+                for (int j = 0; j < B.Board.GetLength(1); j++)
                 {
-                    string cor = "";
-                    if (Board.Board[i, j].On)
-                    {
-                        cor = "green";
-                    }
-                    else { cor = "red"; }
-                    AnsiConsole.Write($"[{cor}]{Board.Board[i, j]}[/]   ");
+                    Console.Write(B.Board[i, j] + "   ");
                 }
+                Console.WriteLine();
             }
-                AnsiConsole.WriteLine();
-        }
-    
-        public void SetBoardRef(BlackoutBoard B)
-        {
-            Board = B;
         }
 
-        public void PromptUser()
+        public (int, int) PromptUser(BlackoutBoard B)
         {
             int X;
             int Y;
-
             Console.WriteLine("Where to Toggle in the X axis?");
             X = Convert.ToInt16(Console.ReadLine());
-
-
             Console.WriteLine("Where to Toggle in the Y axis?");
             Y = Convert.ToInt16(Console.ReadLine());
-
             X -= 1;
             Y -= 1;
-            X = Math.Clamp(X, 0, Board.Board.GetLength(1) - 1);
-            Y = Math.Clamp(Y, 0, Board.Board.GetLength(0) - 1);
-            AnsiConsole.WriteLine(X + " " + Y);
-            Board.ToggleBoard(X, Y);
+            X = Math.Clamp(X, 0, B.Board.GetLength(1) - 1);
+            Y = Math.Clamp(Y, 0, B.Board.GetLength(0) - 1);
+            (int, int) coords = (X, Y);
+            return coords;
         }
-
-        public string GetMenuChoice()
+        public void PromptMenuChoice()
         {
-            AnsiConsole.Write(new FigletText("Blackout").Centered().Color(Spectre.Console.Color.White));
-
-            return AnsiConsole.Prompt(new SelectionPrompt<string>().Title("[lightgreen]Use[/] [bold cyan]Up Arrow[/] [lightgreen]and[/] [bold cyan]Down Arrow[/] [lightgreen]to move between the options[/]").AddChoices("Play", "HowToPlay", "Exit"));
+            var choice = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Pick an Option\n    Play\n  HowToPlay\n     Exit").AddChoices("Play", "HowToPlay", "Exit"));
+            if (choice == "Play")
+            {
+                Controller.StartGame();
+            }
+            if (choice == "HowToPlay")
+            {
+                AnsiConsole.WriteLine("Some prompts will appear after the board, write out the coordinates and make them all [green] green! [/]");
+                PromptMenuChoice();
+            }
+            if (choice == "Exit")
+            {
+                AnsiConsole.Write("[red]BYE!![/]");
+            }
+        }
+        public int PromptStart()
+        {
+            return AnsiConsole.Prompt(new SelectionPrompt<int>().Title("Pick an Option\n    Easy\n  Medium\n     Hard").AddChoices(3, 5, 8));
+        }
+        public void SetControllerRef(Controller C)
+        {
+            Controller = C;
         }
     }
 }
