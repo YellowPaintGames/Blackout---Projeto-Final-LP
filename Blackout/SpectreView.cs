@@ -9,11 +9,15 @@ using Spectre.Console;
 namespace Blackout
 {
     /// <summary>
-    /// O que vai ser utilizado para mostrar o tabuleiro
+    ///This is the View of the Game.
     /// </summary>
     public class SpectreView : IView
     {
+        /// <summary>
+        /// Instance Reference.
+        /// </summary>
         private Controller Controller;
+
         public void ShowBoard(BlackoutBoard B)
         {
             for (int i = 0; i < B.Board.GetLength(0); i++)
@@ -43,12 +47,17 @@ namespace Blackout
         }
         public void PromptMenuChoice()
         {
-            var choice = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Pick an Option\n    Play\n  HowToPlay\n     Exit").AddChoices("Play", "HowToPlay", "Exit"));
+            AnsiConsole.Write(new FigletText 
+            ("Blackout").Centered().Color(Spectre.Console.Color.White));
+
+            var choice = AnsiConsole.Prompt(new SelectionPrompt<string>()
+            .Title("[lightgreen]Use[/] [bold cyan]Up Arrow[/] [lightgreen]and[/] [bold cyan]Down Arrow[/] [lightgreen]to move between the options[/]")
+            .AddChoices("Play", "How To Play", "Exit"));
             if (choice == "Play")
             {
                 Controller.StartGame();
             }
-            if (choice == "HowToPlay")
+            if (choice == "How To Play")
             {
                 AnsiConsole.WriteLine("Some prompts will appear after the board, write out the coordinates and make them all [green] green! [/]");
                 PromptMenuChoice();
@@ -60,7 +69,7 @@ namespace Blackout
         }
         public int PromptStart()
         {
-            return AnsiConsole.Prompt(new SelectionPrompt<int>().Title("Pick an Option\n    Easy\n  Medium\n     Hard").AddChoices(3, 5, 8));
+            return AnsiConsole.Prompt(new SelectionPrompt<int>().Title("Pick an Option\n  Easy\n  Medium\n  Hard").AddChoices(3, 5, 8));
         }
         public void SetControllerRef(Controller C)
         {

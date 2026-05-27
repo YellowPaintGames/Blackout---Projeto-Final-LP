@@ -7,14 +7,23 @@ using System.Threading.Tasks;
 namespace Blackout
 {
     /// <summary>
-    /// A classe responsável pela informação dentro do Board,
-    /// e a sua lógica
+    /// The class responsible for information within the Board, and its logic.
     /// </summary>
     public class BlackoutBoard
     {
         private Controller C;
         private int size;
+
+        /// <summary>
+        /// Gets the two-dimensional array representing the game board.
+        /// </summary>
         public Pip[,] Board { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlackoutBoard"/> class.
+        /// </summary>
+        /// <param name="size">The size of the board.</param>
+        /// <param name="controller">Controller that manages the game flow.</param>
         public BlackoutBoard(int size, Controller controller)
         {
             C = controller;
@@ -28,6 +37,10 @@ namespace Blackout
                 }
             }
         }
+
+        /// <summary>
+        /// Initializes the board with a random pattern of lit pips to start a new game.
+        /// </summary>
         public void StartRandomBoard()
         {
             //difficulty defaults medium
@@ -56,6 +69,12 @@ namespace Blackout
                 }
             }
         }
+
+        /// <summary>
+        /// Toggles the state of a pip at the given coordinates and its adjacent pips
+        /// (Up, Down, Left, Right).
+        /// </summary>
+        /// <param name="coords">The coordinates (X, Y) of the pip to toggle.</param>
         public void ToggleBoard((int X, int Y) coords)
         {
             Board[coords.Y, coords.X].Toggle();
@@ -76,13 +95,6 @@ namespace Blackout
                 Board[coords.Y + 1, coords.X].Toggle();
             }
             C.NextTurn();
-            /*
-            Console.WriteLine(X + " " + Math.Clamp(Y - 1, 0, Board.GetLength(1) - 1));
-            Console.WriteLine(X + " " + Math.Clamp(Y + 1, 0, Board.GetLength(1) - 1));
-            Console.WriteLine(Math.Clamp(X + 1, 0, Board.GetLength(0) - 1) + " " + Y);
-            Console.WriteLine(Math.Clamp(X - 1, 0, Board.GetLength(0) - 1) + " " + Y);
-            ^Cena para debug - FC
-            */
         }
     }
 }
