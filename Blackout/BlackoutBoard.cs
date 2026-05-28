@@ -93,6 +93,22 @@ namespace Blackout
             {
                 Board[coords.Y + 1, coords.X].Toggle();
             }
+            if (coords.X > 0 && coords.Y > 0)
+            {
+                Board[coords.Y - 1, coords.X - 1].Toggle();
+            }
+            if (coords.X < Board.GetLength(1) - 1 && coords.Y < Board.GetLength(0))
+            {
+                Board[coords.Y + 1, coords.X + 1].Toggle();
+            }
+            if (coords.X > 0 && coords.Y < Board.GetLength(0))
+            {
+                Board[coords.Y - 1, coords.X + 1].Toggle();
+            }
+            if (coords.X < Board.GetLength(0) && coords.Y > 0)
+            {
+                Board[coords.Y + 1, coords.X - 1].Toggle();
+            }
             C.NextTurn();
         }
 
