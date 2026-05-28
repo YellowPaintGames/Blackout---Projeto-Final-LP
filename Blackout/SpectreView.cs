@@ -17,11 +17,10 @@ namespace Blackout
         /// Instance Reference.
         /// </summary>
         private Controller Controller;
-
         public void ShowBoard(BlackoutBoard B)
         {
             AnsiConsole.Clear();
-
+            ShowHighScore(Controller.LoadScores($"{Controller.difficulty}").Item1 + $", Current Turn is {Controller.Turns}");
             for (int i = 0; i < B.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < B.Board.GetLength(1); j++)
@@ -45,20 +44,28 @@ namespace Blackout
             int X;
             int Y;
             Console.WriteLine("Where to Toggle in the X axis?");
-            X = Convert.ToInt16(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out X))
+            {
+                Console.WriteLine("WRONG");
+                PromptUser(B);
+            }
             Console.WriteLine("Where to Toggle in the Y axis?");
-            Y = Convert.ToInt16(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out Y))
+            {
+                Console.WriteLine("WRONG");
+                PromptUser(B);
+            }
             X -= 1;
             Y -= 1;
-            X = Math.Clamp(X, 0, B.Board.GetLength(1) - 1);
-            Y = Math.Clamp(Y, 0, B.Board.GetLength(0) - 1);
+            X = Math.Clamp(X, 0, B.size - 1);
+            Y = Math.Clamp(Y, 0, B.size - 1);
             (int, int) coords = (X, Y);
             return coords;
         }
         public void PromptMenuChoice()
         {
             AnsiConsole.Clear();
-            AnsiConsole.Write(new FigletText 
+            AnsiConsole.Write(new FigletText
             ("Blackout").Centered().Color(Spectre.Console.Color.White));
 
             var choice = AnsiConsole.Prompt(new SelectionPrompt<string>()
@@ -98,6 +105,10 @@ namespace Blackout
             AnsiConsole.MarkupLine("\nPress any key to return to the menu...");
             Console.ReadKey(true);
             PromptMenuChoice();
+        }
+        public void ShowHighScore(string HS)
+        {
+            AnsiConsole.WriteLine($"{HS}");
         }
     }
 }

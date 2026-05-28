@@ -38,5 +38,6 @@ namespace Blackout
         /// Shows a win message when all pips are turned on.
         /// </summary>
         void ShowWinMessage();
+        void ShowHighScore(string HS);
     }
 }

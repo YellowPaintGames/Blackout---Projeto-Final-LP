@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Blackout
     public class BlackoutBoard
     {
         private Controller C;
-        private int size;
+        public int size { private set; get; }
 
         /// <summary>
         /// Gets the two-dimensional array representing the game board.
@@ -35,6 +36,18 @@ namespace Blackout
                 {
                     Board[i, j] = new Pip();
                 }
+            }
+            if (size == 3)
+            {
+                C.difficulty = "Easy";
+            }
+            else if (size == 5)
+            {
+                C.difficulty = "Normal";
+            }
+            else if (size == 8)
+            {
+                C.difficulty = "Hard";
             }
         }
 
@@ -93,19 +106,20 @@ namespace Blackout
             {
                 Board[coords.Y + 1, coords.X].Toggle();
             }
-            if (coords.X > 0 && coords.Y > 0)
+            //Checks if the diagonals are valid
+            if (coords.X - 1 > 0 && coords.Y - 1 > 0)
             {
                 Board[coords.Y - 1, coords.X - 1].Toggle();
             }
-            if (coords.X < Board.GetLength(1) - 1 && coords.Y < Board.GetLength(0))
+            if (coords.X + 1 < Board.GetLength(1) - 1 && coords.Y + 1 < Board.GetLength(0))
             {
                 Board[coords.Y + 1, coords.X + 1].Toggle();
             }
-            if (coords.X > 0 && coords.Y < Board.GetLength(0))
+            if (coords.Y - 1 > 0 && coords.X + 1 < Board.GetLength(0))
             {
                 Board[coords.Y - 1, coords.X + 1].Toggle();
             }
-            if (coords.X < Board.GetLength(0) && coords.Y > 0)
+            if (coords.Y + 1 < Board.GetLength(0) && coords.X - 1 > 0)
             {
                 Board[coords.Y + 1, coords.X - 1].Toggle();
             }

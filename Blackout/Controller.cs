@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Blackout
 {
@@ -10,7 +11,8 @@ namespace Blackout
     {
         private IView View;
         private BlackoutBoard Board;
-
+        public int Turns { set; get; } = 0;
+        public string difficulty { set; get; }
         /// <summary>
         /// Initializes the controller with a view implementation.
         /// </summary>
@@ -25,10 +27,9 @@ namespace Blackout
         /// </summary>
         public void StartGame()
         {
+            Turns = 1;
             Board = new BlackoutBoard(View.PromptStart(), this);
-
             Board.StartRandomBoard();
-            
             View.ShowBoard(Board);
             Board.ToggleBoard(View.PromptUser(Board));
         }
@@ -42,10 +43,40 @@ namespace Blackout
             View.ShowBoard(Board);
             if (Board.IsWin())
             {
+                if (LoadScores(difficulty).Item2 > Turns)
+                {
+                    SaveGame(difficulty, Turns);
+                }
                 View.ShowWinMessage();
                 return;
             }
+            Turns++;
             Board.ToggleBoard(View.PromptUser(Board));
+        }
+        private void SaveGame(string Difficulty, int Turns)
+        {
+            StreamWriter S = new StreamWriter("HighScores.txt");
+            S.WriteLine($"{Difficulty} : {Turns} Turns (Try getting a smaller number!)");
+            S.Close();
+        }
+        public (string, int) LoadScores(string Difficulty)
+        {
+            string s;
+            string Result = "You haven't gotten a score here!";
+            int turns = 0;
+            using StreamReader S = new StreamReader("HighScores.txt");
+            while ((s = S.ReadLine()) != null)
+            {
+                foreach (string word in s.Split(" "))
+                {
+                    if (Difficulty == word)
+                    {
+                        Result = s;
+                        turns = int.Parse(s.Split(" ")[2]);
+                    }
+                }
+            }
+            return (Result, turns);
         }
     }
 }
